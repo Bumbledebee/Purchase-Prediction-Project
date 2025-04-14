@@ -1,0 +1,5 @@
+data/events.csv
+data/events_cleaned.csv
+data/events_ml.csv
+.DS_Store
+utils/__pycache__
