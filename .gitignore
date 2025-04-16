@@ -1,5 +1,4 @@
-data/events.csv
-data/events_cleaned.csv
-data/events_ml.csv
+data/
 .DS_Store
 utils/__pycache__
+notebook/4
