@@ -3,11 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap 
 import seaborn as sns
-import plotly.graph_objs as go
-color1='#4a86e8'
-color2='#ffd966'
-custom_cmap = LinearSegmentedColormap.from_list('custom_cmap', [color1,color2])
-custom_cmap2 =  [color1,color2]
+from datetime import timedelta
+color1='black'
+color2='forestgreen'
+color3='mediumblue'
 
 
 # checks for dupplicates, NaN & empty spaces
@@ -36,7 +35,7 @@ def check_data(data):
             perc = str(round(data[x].eq(' ').sum() / len(data) * 100, 2))
             print(f"{perc}% of empty space in the {x} column")
 
-# given a dataframe a function to create a subset of columns
+# function to create a subset of columns given a dataframe
 def create_subset(data, columns):
     subset = data[columns]
     return subset
@@ -51,45 +50,64 @@ def separate_numerical_categorical(df, threshold=18):
     cat = pd.concat([cat, cat_num], axis=1)  
     return num, cat
 
-# Function to view distribuion and outliers of numerical columns
-def create_distribution_plot(num,type):
-    if type == 'distribution':
-        nrows, ncols = 5,4 # how many subplots per row and column
+# function to view distribuion and outliers of numerical columns
+def create_distribution_plot(num, plot_type, cap=1000):
+    # define subplot configuration
+    nrows, ncols = 3,1
+    fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(50,40))
+    axes = axes.flatten()
 
-        fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(15, 12))
+    for i, ax in enumerate(axes):
+        if i >= len(num.columns):  # avoiding empty plots
+            ax.set_visible(False)
+            continue
+            
+        # plot according to the given plot type
+        column_data = num.iloc[:, i].dropna()
+        ax.set_title(num.columns[i], fontsize=15)
 
-        axes = axes.flatten() #it converts the array from a shape of 2D (nrows, ncols) to a shape of 1D(nrows*ncols,)
-
-
-        for i, ax in enumerate(axes): #i is getting the index, ax the axis object
-            if i >= len(num.columns):  # avoids showing empty plots 
-                ax.set_visible(False) 
-                continue                
-            ax.hist(num.iloc[:, i], bins=40, color=color2, edgecolor='black')
-            ax.set_title(num.columns[i], fontsize=15)
-
-        plt.tight_layout()
-        plt.show()
-
-    elif type == 'outliers':
-        nrows, ncols = 5, 4
-        fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(15, 12))
-        axes = axes.flatten()
-
-        for i, ax in enumerate(axes):
-            if i >= len(num.columns):
-                ax.set_visible(False)
-                continue
+        if plot_type == 'distribution':
+            filtered_data = column_data[column_data <= cap]  # cap values at 1000
+            ax.hist(filtered_data, bins=1000, color=color2, edgecolor=color1)          
+        elif plot_type == 'outliers':
             ax.boxplot(
-                num.iloc[:, i].dropna(), vert=False, patch_artist=True,
-                boxprops={'facecolor': color1, 'color': 'black'},  # Correct usage here
-                medianprops={'color': 'yellow'},
+                column_data, vert=False, patch_artist=True,
+                boxprops={'facecolor': color2, 'color': color1 }, 
+                medianprops={'color': color2},
                 whiskerprops={'color': 'black'},
                 capprops={'color': 'black'},
-                flierprops={'marker': 'o', 'color': 'red', 'markersize': 5}
+                flierprops={'marker': 'o', 'color': color3, 'markersize': 5}
             )
-            ax.set_title(num.columns[i], fontsize=14)
             ax.tick_params(axis='x', labelsize=14)
 
-        plt.tight_layout()
-        plt.show()
+    plt.tight_layout()
+    plt.show()
+
+
+# function to creat plots with double y axis
+# y1 is a bar plot and y2 and y3 are line plots
+def plot_dual_axis_bar_line(xticks, xtick_label, y1, y2, y3, x_label, y1_label, y2_label, title):
+  
+    fig, ax1 = plt.subplots(figsize=(12, 6))
+
+    # Primary y-axis y1
+    ax1.bar(y1.index, y1.values, color=color1, edgecolor='black', width=0.8, label='View', alpha=0.86)
+    ax1.set_xlabel(x_label, fontsize=12)
+    ax1.set_ylabel(y1_label, fontsize=12, color=color1)
+    ax1.tick_params(axis='y', labelcolor=color1)
+    ax1.set_xticks(xticks)
+    ax1.set_xticklabels(xtick_label, rotation=45)
+    ax1.legend(loc='upper left')
+
+    # secondary y-axis for y2 and y3
+    ax2 = ax1.twinx()
+    ax2.plot(y2.index, y2.values, color=color3, label='Purchase', linewidth=2)
+    ax2.plot(y3.index, y3.values, color=color2, label='Cart', linewidth=2)
+    ax2.set_ylabel(y2_label, fontsize=12, color='black')
+    ax2.tick_params(axis='y', labelcolor='black')
+    ax2.legend(loc='upper right')
+
+    # add title
+    fig.suptitle(title, fontsize=14)
+    plt.savefig(f"../images/{title.replace(' ', '_')}.png")
+    plt.show()

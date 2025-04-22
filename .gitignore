@@ -2,3 +2,5 @@ data/
 .DS_Store
 utils/__pycache__
 notebook/4
+notebook/sanity_check/test_df.csv
+notebook/sanity_check/test_df_done.csv

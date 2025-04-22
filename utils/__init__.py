@@ -1,3 +1,5 @@
 from .helper_functions import check_data
 from .helper_functions import create_subset
 from .helper_functions import separate_numerical_categorical
+from .helper_functions import create_distribution_plot
+from .helper_functions import plot_dual_axis_bar_line
