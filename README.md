@@ -1,6 +1,6 @@
 # Predicting Purchases: Will This View Turn Into a Purchase?
 
-In the advertising and e-commerce world, not all product views are equal. Some views lead to purchases, while others do not. Predicting whether a view will result in a purchase is a **classification problem**. This project simulates this problem using an e-commerce shopping dataset, where users interact with products by viewing, adding to the cart, or purchasing them.
+In the advertising and e-commerce world, not all ad views are equal. Some views lead to purchases, while others do not. Predicting whether a view will result in a purchase is a **classification problem**. This project simulates this problem using an e-commerce shopping dataset, where users interact with products by viewing, adding to the cart, or purchasing them.
 
 The dataset is highly imbalanced, as only a small fraction of views result in purchases. By splitting the dataset into views that lead to purchases and those that do not, we aim to create a predictive model capable of handling this imbalance.
 
@@ -54,25 +54,6 @@ The primary goal of this project is to predict whether a product view will lead 
 - Understand the factors influencing purchase decisions.
 - Build a robust machine learning model to classify views as likely to result in a purchase or not.
 - Address challenges such as class imbalance and categorical feature encoding.
-
----
-
-## Tools and Technologies
-
-- **Programming Language**: Python
-- **Libraries**:
-  - Data Manipulation: `pandas`, `numpy`
-  - Visualization: `matplotlib`, `seaborn`
-  - Machine Learning: `scikit-learn`
-- **Environment**: Jupyter Notebook
-
----
-
-## Dataset Insights
-
-- The dataset contains **885,129 rows** and **9 columns**.
-- The target variable is **last_view_before_purchase**, specifically predicting the transition from `view` to `purchase` as 0 or 1.
-- The dataset is highly imbalanced, with a majority of events being `view` and only a small fraction being `purchase`.
 
 ---
 
