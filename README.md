@@ -43,8 +43,9 @@ The dataset is highly imbalanced, as only a small fraction of views result in pu
 
 3. **Machine Learning**:
    - Build a classification model to predict whether a view will result in a purchase.
-   - Handle class imbalance using techniques like oversampling, undersampling, or class weighting.
-   - Evaluate model performance using metrics such as precision, recall, F1-score, and ROC-AUC.
+   - Think about handling class imbalance (or not)
+   - Many features are categorical (e.g. brand) and will require encoding.
+   - Evaluate model performance using precision as the main key perfomance metric.
 
 ---
 
@@ -55,18 +56,6 @@ The primary goal of this project is to predict whether a product view will lead 
 - Build a robust machine learning model to classify views as likely to result in a purchase or not.
 - Address challenges such as class imbalance and categorical feature encoding.
 
----
-
-## Challenges
-
-1. **Class Imbalance**:
-   - The dataset is dominated by `view` events, with relatively few `purchase` events. There is a high inherent imbalance.
-
-2. **Categorical Features**:
-   - Many features, such as `category_code` and `brand`, are categorical and require encoding.
-
-3. **Scalability**:
-   - The dataset is large, requiring efficient preprocessing and modeling techniques.
 
 ---
 
@@ -76,6 +65,7 @@ The results of the project will include:
 - Insights from EDA, such as the most influential features for predicting purchases.
 - A trained machine learning model capable of predicting purchases with high accuracy.
 - Visualizations of feature importance and model performance.
+- View the presentation [here](https://ironhack.zoom.us/rec/play/2tWYaGRqo53sBbMu3qpEPIwHCnWezFHc5RlUVmH52ES8Gk4iNuhExD4mSYyMEKCu70CIYE21nyHue5y5.CXx1ib9LHS4nk_4K?accessLevel=meeting&canPlayFromShare=true&from=share_recording_detail&continueMode=true&componentName=rec-play&originRequestUrl=https%3A%2F%2Fironhack.zoom.us%2Frec%2Fshare%2FOjEPsV_L498UWM7OnZRwYYOm-IFCkvU-FV0bsqcB4tX2HZEYqncnU4voeEjTfhs9.MNujQnKc7jLoyQnK) from 2h and 36 Minutes. The presentation is around 10 minutes long.
 
 ---
 
